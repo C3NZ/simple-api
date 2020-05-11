@@ -1,27 +1,18 @@
-# Project title
+# simple c# api
 
 ## Description
-This project is currently under construction.
+This is just a test project to learn more about making web apps with
+the .NET framework.
 
-## Goals
-### Short term goals
-- [ ] Goal 1
-- [ ] Goal 2
-- [ ] Goal 3
-
-### Long term goals
-- [ ] Goal 1
-- [ ] Goal 2
-- [ ] Goal 3
 
 ## How to run/setup
-Instructions on the setup process needed for running locally.
+Assuming you're in the root directory:
+```bash
+dotnet run
+```
 
-## How to deploy
-How to deploy your own instance live.
-
-## Live deployments
-Where you can find this project in production
+## Dependencies
+* >= dotnet-sdk-3.1 
 
 ## How to contribute
 Fork the current repository and then make the changes that you'd like to said fork. Upon adding features, fixing bugs,
