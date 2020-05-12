@@ -26,7 +26,7 @@ namespace sample_api.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            Random rng = new Random();
+            var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
