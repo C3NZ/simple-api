@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-
+using System.Collections.Generic;
 using sample_api.Models;
 
 namespace sample_api.Controllers
@@ -10,7 +10,6 @@ namespace sample_api.Controllers
     [Route("api/user")]
     public class UserController : ControllerBase
     {
-        private readonly ILogger<UserController> _logger;
         private readonly UserContext _context;
 
         public UserController(UserContext context) 
@@ -18,6 +17,20 @@ namespace sample_api.Controllers
             _context = context;
         }
 
+        // GET /api/user
+        [HttpGet]
+        public async Task<ActionResult<List<User>>> GetUsers()
+        {
+            IAsyncEnumerable<User> users = _context.Users.AsAsyncEnumerable();
+
+            List<User> all_users = new List<User>();
+            await foreach (User user in users) 
+            {
+                all_users.Add(user);
+            }
+
+            return all_users;
+        }
 
         // GET /api/user/username
         [HttpGet("{username}")]
@@ -31,11 +44,22 @@ namespace sample_api.Controllers
             return user;
         }
 
-        // GET /api/user/username
-        [HttpPost]
+
+        // POST /api/user
         public async Task<ActionResult<User>> PostUser(User user)
         {
             _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(
+                    nameof(PostUser), new { ID = user.ID }, user);
+        }
+
+        // PUT /api/user
+        [HttpPut]
+        public async Task<ActionResult<User>> UpdateUser(User user)
+        {
+            _context.Users.Update(user);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(
